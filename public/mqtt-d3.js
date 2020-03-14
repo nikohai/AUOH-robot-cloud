@@ -28,12 +28,20 @@ let j1 = d3.line()
     });
 g.append("g").attr("class", "axis x");
 g.append("g").attr("class", "axis y");
+//j1
 g.append("path")
     .datum(joint_datas)
     .attr("class", "j1")
     .attr("d", j1)
     .style('fill', 'none')
     .style('stroke', '#00F');
+//j2
+g.append("path")
+    .datum(joint_datas)
+    .attr("class", "j2")
+    .attr("d", j2)
+    .style('fill', 'none')
+    .style('stroke', '#0FF');
 const resize = () => {
     width = window.innerWidth - margin.left - margin.right
     height = window.innerHeight - margin.top - margin.bottom;
@@ -60,6 +68,9 @@ const update_chart = () => {
         .call(d3.axisLeft(y_scale));
     svg.select(".j1") // change the line
         .attr("d", j1(joint_datas));
+
+    svg.select(".j2") // change the line
+        .attr("d", j2(joint_datas));
 };
 
 
