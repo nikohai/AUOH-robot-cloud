@@ -102,7 +102,7 @@ const load_geometries = async () => {
         joints.push(new THREE.Mesh(geometry, yellow));
         joints[5].geometry.scale(0.001, 0.001, 0.001);
     //    scene.add(joints[5]);
-    }
+    } 
 
 };
 
@@ -112,7 +112,17 @@ load_geometries().then(() => {
 //move parts to origin
     joints[1].geometry.translate(0, -0.282, 0);
     joints[2].geometry.translate(-0.312, -0.670, 0.117);
-    joints[3].geometry.translate(-0.26869, -1.74413, 0.196685);
+    joints[3].geometry.translate(-0.26869, -1.74413, 0.19685);
+    joints[4].geometry.translate(-1.31519, -1.96913, 0.00015);
+    joints[5].geometry.translate(-1.54869, -1.96913, 0.08715);
+    //joints[6].geometry.translate(-1.76369, -1.96913, 0.02047);
+
+    //J1: [0, 282,0] Y
+    //J2: [312, 670, -117] Z
+    //J3: [268.69, 1744.13, -196.85] Z
+    //J4: [1315.19, 1969.13, 0.15] X
+    //J5: [1548.69, 1969.13, 87.15] Z
+    //J6: [1763.69, 1969.13, 20.47] X
 
     scene.add(joints[0]);
     joints[0].rotation.set(THREE.Math.degToRad(90), 0, 0);
@@ -132,9 +142,31 @@ load_geometries().then(() => {
     offsets[2].position.set(-0.04331, 1.07413, -0.07985);
     joints[2].add(offsets[2]);
     offsets[2].add(joints[3]);
+
+    offsets.push(new THREE.Group());
+    offsets[3].position.set(1.0465, 0.255, 0.197);
+    joints[3].add(offsets[3]);
+    offsets[3].add(joints[4]);
+
+    offsets.push(new THREE.Group());
+    offsets[4].position.set(0.2335, 0, 0.087);
+    joints[4].add(offsets[4]);
+    offsets[4].add(joints[5]);
+
+    //offsets.push(new THREE.Group());
+    //offsets[5].position.set(0.215, 0, -0.06668);
+    //joints[5].add(offsets[5]);
+    //offsets[5].add(joints[6]);
+    
+    //J1: [0, 282,0] Y
+    //J2: [312, 670, -117] Z
+    //J3: [268.69, 1744.13, -196.85] Z
+    //J4: [1315.19, 1969.13, 0.15] X
+    //J5: [1548.69, 1969.13, 87.15] Z
+    //J6: [1763.69, 1969.13, 20.47] X
     
     
-    joints[2].rotation.set(0, 0, THREE.Math.degToRad(45));
+    //joints[5].rotation.set(0, 0, THREE.Math.degToRad(45));
 
 
 });
@@ -173,6 +205,8 @@ mqtt_client.on('message', (topic, message) => {
         joints[1].rotation.set(0, THREE.Math.degToRad(joint_data.joints[0]), 0);
         joints[2].rotation.set(0, 0, THREE.Math.degToRad(joint_data.joints[1]));
         joints[3].rotation.set(0, 0, THREE.Math.degToRad(joint_data.joints[2]) - THREE.Math.degToRad(joint_data.joints[1]));
+        joints[4].rotation.set(THREE.Math.degToRad(joint_data.joints[3]), 0, 0);
+        joints[5].rotation.set(0, 0, THREE.Math.degToRad(joint_data.joints[4]));
     console.log(message);
     
 });
